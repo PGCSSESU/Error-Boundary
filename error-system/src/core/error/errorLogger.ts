@@ -3,12 +3,20 @@ import { useErrorStore } from "./errorStore";
 import type { AppError } from "./errorTypes";
 
 export function logError(error: AppError) {
+  // 🔥 Capture stack if missing (LOGIC errors)
+  const enrichedError: AppError = {
+    ...error,
+    stack: error.stack ?? new Error(error.message).stack,
+  };
 
-  console.error("[APP ERROR]", error);
+  // 👨‍💻 Developer console
+  console.error("[APP ERROR]", enrichedError);
 
-  useErrorStore.getState().logError(error);
+  // 🗂️ Store FULL error (with stack)
+  useErrorStore.getState().logError(enrichedError);
 
-  toast.error(error.message, {
-    description: `Ref: ${error.correlationId}`,
+  // 🔔 User notification
+  toast.error(enrichedError.message, {
+    description: `Ref: ${enrichedError.stack}`,
   });
 }
