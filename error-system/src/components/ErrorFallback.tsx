@@ -31,7 +31,7 @@ export function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
 
 
         <p className="mt-1 text-center text-sm text-green-700/80">
-          No worries — this didn’t break anything. You can retry safely.
+          No worries — this didn't break anything. You can retry safely.
         </p>
 
 
